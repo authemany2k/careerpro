@@ -19,11 +19,15 @@ class EloquentModelBuilder
 
     /**
      * EloquentModelBuilder constructor.
-     * @param ProcessorInterface[] $processors
+     * @param ProcessorInterface[]|\IteratorAggregate $processors
      */
     public function __construct($processors)
     {
-        $this->processors = $processors;
+        if ($processors instanceof \IteratorAggregate) {
+            $this->processors = iterator_to_array($processors);
+        } else {
+            $this->processors = $processors;
+        }
     }
 
     /**

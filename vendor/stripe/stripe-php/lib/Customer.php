@@ -8,7 +8,6 @@ namespace Stripe;
  * @property string $id
  * @property string $object
  * @property int $account_balance
- * @property string $business_vat_id
  * @property string $created
  * @property string $currency
  * @property string $default_source
@@ -17,6 +16,7 @@ namespace Stripe;
  * @property Discount $discount
  * @property string $email
  * @property string $invoice_prefix
+ * @property mixed $invoice_settings
  * @property bool $livemode
  * @property StripeObject $metadata
  * @property mixed $shipping
@@ -51,6 +51,7 @@ class Customer extends ApiResource
     }
 
     const PATH_SOURCES = '/sources';
+    const PATH_TAX_IDS = '/tax_ids';
 
     /**
      * @param array|null $params
@@ -196,10 +197,60 @@ class Customer extends ApiResource
      * @param array|null $params
      * @param array|string|null $opts
      *
-     * @return ApiResource
+     * @return Collection The list of sources.
      */
     public static function allSources($id, $params = null, $opts = null)
     {
         return self::_allNestedResources($id, static::PATH_SOURCES, $params, $opts);
+    }
+
+    /**
+     * @param string|null $id The ID of the customer on which to create the tax id.
+     * @param array|null $params
+     * @param array|string|null $opts
+     *
+     * @return ApiResource
+     */
+    public static function createTaxId($id, $params = null, $opts = null)
+    {
+        return self::_createNestedResource($id, static::PATH_TAX_IDS, $params, $opts);
+    }
+
+    /**
+     * @param string|null $id The ID of the customer to which the tax id belongs.
+     * @param string|null $taxIdId The ID of the tax id to retrieve.
+     * @param array|null $params
+     * @param array|string|null $opts
+     *
+     * @return ApiResource
+     */
+    public static function retrieveTaxId($id, $taxIdId, $params = null, $opts = null)
+    {
+        return self::_retrieveNestedResource($id, static::PATH_TAX_IDS, $taxIdId, $params, $opts);
+    }
+
+    /**
+     * @param string|null $id The ID of the customer to which the tax id belongs.
+     * @param string|null $taxIdId The ID of the tax id to delete.
+     * @param array|null $params
+     * @param array|string|null $opts
+     *
+     * @return ApiResource
+     */
+    public static function deleteTaxId($id, $taxIdId, $params = null, $opts = null)
+    {
+        return self::_deleteNestedResource($id, static::PATH_TAX_IDS, $taxIdId, $params, $opts);
+    }
+
+    /**
+     * @param string|null $id The ID of the customer on which to retrieve the tax ids.
+     * @param array|null $params
+     * @param array|string|null $opts
+     *
+     * @return Collection The list of tax ids.
+     */
+    public static function allTaxIds($id, $params = null, $opts = null)
+    {
+        return self::_allNestedResources($id, static::PATH_TAX_IDS, $params, $opts);
     }
 }

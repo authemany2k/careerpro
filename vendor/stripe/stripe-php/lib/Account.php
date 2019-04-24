@@ -7,36 +7,24 @@ namespace Stripe;
  *
  * @property string $id
  * @property string $object
- * @property string $business_logo
- * @property string $business_name
- * @property string $business_primary_color
- * @property string $business_url
+ * @property mixed $business_profile
+ * @property string $business_type
  * @property mixed $capabilities
  * @property bool $charges_enabled
+ * @property mixed $company
  * @property string $country
  * @property int $created
- * @property bool $debit_negative_balances
- * @property mixed $decline_charge_on
  * @property string $default_currency
  * @property bool $details_submitted
- * @property string $display_name
  * @property string $email
  * @property Collection $external_accounts
- * @property mixed $legal_entity
+ * @property mixed $individual
  * @property StripeObject $metadata
- * @property mixed $payout_schedule
- * @property string $payout_statement_descriptor
  * @property bool $payouts_enabled
- * @property string $product_description
- * @property string $statement_descriptor
- * @property mixed $support_address
- * @property string $support_email
- * @property string $support_phone
- * @property string $support_url
- * @property string $timezone
+ * @property mixed $requirements
+ * @property mixed $settings
  * @property mixed $tos_acceptance
  * @property string $type
- * @property mixed $verification
  *
  * @package Stripe
  */
@@ -53,6 +41,37 @@ class Account extends ApiResource
         retrieve as protected _retrieve;
     }
     use ApiOperations\Update;
+
+    /**
+     * Possible string representations of an account's business type.
+     * @link https://stripe.com/docs/api/accounts/object#account_object-business_type
+     */
+    const BUSINESS_TYPE_COMPANY    = 'company';
+    const BUSINESS_TYPE_INDIVIDUAL = 'individual';
+
+    /**
+     * Possible string representations of an account's capabilities.
+     * @link https://stripe.com/docs/api/accounts/object#account_object-capabilities
+     */
+    const CAPABILITY_CARD_PAYMENTS     = 'card_payments';
+    const CAPABILITY_LEGACY_PAYMENTS   = 'legacy_payments';
+    const CAPABILITY_PLATFORM_PAYMENTS = 'platform_payments';
+
+    /**
+     * Possible string representations of an account's capability status.
+     * @link https://stripe.com/docs/api/accounts/object#account_object-capabilities
+     */
+    const CAPABILITY_STATUS_ACTIVE   = 'active';
+    const CAPABILITY_STATUS_INACTIVE = 'inactive';
+    const CAPABILITY_STATUS_PENDING  = 'pending';
+
+    /**
+     * Possible string representations of an account's type.
+     * @link https://stripe.com/docs/api/accounts/object#account_object-type
+     */
+    const TYPE_CUSTOM   = 'custom';
+    const TYPE_EXPRESS  = 'express';
+    const TYPE_STANDARD = 'standard';
 
     public static function getSavedNestedResources()
     {
@@ -195,7 +214,7 @@ class Account extends ApiResource
      * @param array|null $params
      * @param array|string|null $opts
      *
-     * @return BankAccount|Card
+     * @return Collection The list of external accounts (BankAccount or Card).
      */
     public static function allExternalAccounts($id, $params = null, $opts = null)
     {
@@ -228,7 +247,7 @@ class Account extends ApiResource
 
     /**
      * @param string|null $id The ID of the account to which the person belongs.
-     * @param array|null $personId The ID of the person to retrieve.
+     * @param string|null $personId The ID of the person to retrieve.
      * @param array|null $params
      * @param array|string|null $opts
      *
@@ -241,7 +260,7 @@ class Account extends ApiResource
 
     /**
      * @param string|null $id The ID of the account to which the person belongs.
-     * @param array|null $personId The ID of the person to update.
+     * @param string|null $personId The ID of the person to update.
      * @param array|null $params
      * @param array|string|null $opts
      *
@@ -254,7 +273,7 @@ class Account extends ApiResource
 
     /**
      * @param string|null $id The ID of the account to which the person belongs.
-     * @param array|null $personId The ID of the person to delete.
+     * @param string|null $personId The ID of the person to delete.
      * @param array|null $params
      * @param array|string|null $opts
      *
@@ -270,7 +289,7 @@ class Account extends ApiResource
      * @param array|null $params
      * @param array|string|null $opts
      *
-     * @return Person
+     * @return Collection The list of persons.
      */
     public static function allPersons($id, $params = null, $opts = null)
     {
