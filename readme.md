@@ -31,23 +31,7 @@
 <strong>Note: .env</strong> is a hidden file, you can see it by opening directory to a text editor.</li>
         <li>Import demo database, demo database located at <strong>root>source>db-backup</strong> directory</li>
     </ul>
-    <ul>
-        <li>Admin Login</li>
-        <p>E-Mail: admin@demo.com</p>                          
-        <p>Password: 123456</p>
-        <li>Employer Login</li>
-        <p>E-Mail: stephen@demo.com</p>                          
-        <p>Password: 123456</p>
-        <li>Agent Login</li>
-        <p>E-Mail: brenda@demo.com</p>                          
-        <p>Password: 123456</p>
-        <li>User Login</li>
-        <p>E-Mail: brenda@demo.com</p>                          
-        <p>Password: 123456</p>
-        <li>User Login</li>
-        <p>E-Mail: stephano@demo.com</p>                          
-        <p>Password: 123456</p>
-    </ul>
+
     </section>
 ## About Laravel
 
